@@ -30,6 +30,7 @@ resource "hcloud_server" "server" {
   server_type = each.value.server_type
   location    = each.value.location
   backups     = each.value.backups
+  user_data   = lookup(var.user_data_scripts, try(each.value.user_data_script, ""), null)
   ssh_keys    = [var.ssh_public_key_name]
 
   #
