@@ -8,7 +8,20 @@ variable "ssh_private_key" {}
 variable "ssh_public_key" {}
 variable "ansible_playbook_path" {}
 variable "ansible_vault_password_path" {}
-variable "rancher_node_command" {}
+
+#
+# The rancher node command to be executed
+#
+variable "rancher_node_command" {
+  default = ""
+}
+
+#
+# Whether to execute RKE deployment on the node at all
+#
+variable "run_rancher_deploy" {
+  default = true
+}
 
 # Optional configuration
 
@@ -41,9 +54,6 @@ variable "run_ansible_playbook" {
 }
 variable "post_ansible_ssh_user" {
   default = "deploy"
-}
-variable "run_rancher_deploy" {
-  default = true
 }
 
 #

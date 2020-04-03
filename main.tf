@@ -90,7 +90,7 @@ resource "hcloud_server" "server" {
   #
   provisioner "remote-exec" {
 
-    inline = [var.run_rancher_deploy ? "${var.rancher_node_command} ${each.value.roles} --internal-address ${each.value.private_ip_address}" : ""]
+    inline = [var.run_rancher_deploy ? "${var.rancher_node_command} ${each.value.roles} --internal-address ${each.value.private_ip_address}" : "ls"]
 
     connection {
       host        = self.ipv4_address
