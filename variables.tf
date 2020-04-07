@@ -2,7 +2,31 @@
 
 variable "cluster_name" {}
 
-variable "servers" {}
+#
+# Server nodes that will be part of the Kubernetes cluster
+#
+variable "servers" {
+  type = map(
+    object({
+      # Name of the node
+      name               = string,
+      # The private address of the node
+      private_ip_address = string,
+      # Hetzner server type
+      server_type        = string,
+      # Hetzner base OS image
+      image              = string,
+      # Datacenter location
+      location           = string,
+      # Whether backups are needed for it
+      backups            = bool,
+      # Cloud-Init script reference (see user_data_scripts map)
+      user_data_script   = string,
+      # Rancher/K8s node roles (e.g.: "--worker --etcd --controlplane)
+      roles              = string
+    })
+  )
+}
 
 variable "ssh_private_key" {}
 variable "ssh_public_key" {}
