@@ -30,7 +30,9 @@ resource "hcloud_server" "server" {
   server_type = each.value.server_type
   location    = each.value.location
   backups     = each.value.backups
+
   user_data   = lookup(var.user_data_scripts, try(each.value.user_data_script, ""), null)
+
   ssh_keys    = [var.ssh_public_key_name]
 
   #
@@ -90,7 +92,11 @@ resource "hcloud_server" "server" {
   #
   provisioner "remote-exec" {
 
-    inline = [var.run_rancher_deploy ? "${var.rancher_node_command} ${each.value.roles} --internal-address ${each.value.private_ip_address}" : "ls"]
+    inline = [
+      var.run_rancher_deploy
+        ? "${var.rancher_node_command} ${each.value.roles} --internal-address ${each.value.private_ip_address} --address ${each.value.private_ip_address}"
+        : "ls"
+    ]
 
     connection {
       host        = self.ipv4_address
